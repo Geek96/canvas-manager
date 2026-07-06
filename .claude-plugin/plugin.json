@@ -1,0 +1,14 @@
+{
+  "name": "canvas-manager",
+  "version": "0.1.0",
+  "description": "Sync Canvas LMS courses into a semester/course-organized Obsidian vault, with structured hand-off to daily planning tools",
+  "author": {
+    "name": "Geek96",
+    "url": "https://github.com/Geek96"
+  },
+  "license": "MIT",
+  "keywords": ["canvas", "lms", "obsidian", "students", "planning"],
+  "skills": [
+    "./skills/canvas-manager"
+  ]
+}
