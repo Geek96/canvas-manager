@@ -4,9 +4,28 @@ A Claude Code skill that syncs Canvas LMS courses into a semester → course
 organized Obsidian vault (`raw/` = Canvas evidence, `wiki/` = your learning
 notes), on a schedule you control.
 
-Standalone usage: install this repo as a Claude Code plugin and follow
-`skills/canvas-manager/SKILL.md`.
+## Standalone usage
 
-Optional PlanVault integration: PlanVault can pull this repo in as a git
-submodule for users who want Canvas course management alongside their daily
-planning. See PlanVault's own docs for that wiring.
+1. Install this repo as a Claude Code plugin (or point Claude Code at
+   `skills/canvas-manager/SKILL.md` directly).
+2. Connect a Canvas MCP server for your school's Canvas instance.
+3. Ask the agent to initialize CanvasManager — it will ask for your vault
+   root, current semester, and courses.
+4. After initialization, set up the three recurring sync runs via
+   Claude Code's `/schedule` skill (see `skills/canvas-manager/SKILL.md`).
+
+## Optional PlanVault integration
+
+PlanVault users who also use Canvas can pull this repo in as a git
+submodule (opt-in, not required for PlanVault's core daily-planning
+features). CanvasManager writes plan candidates to
+`{Root}/{Semester}/_exports/planvault-tasks.md` for PlanVault to consume —
+it does not do calendars, reminders, or daily planning itself.
+
+## Development
+
+```bash
+python3 -m unittest discover -s tests -v
+```
+
+No external dependencies — Python 3 standard library only.
