@@ -1,0 +1,5 @@
+[
+  {"canvas_type": "assignment", "canvas_id": 501, "course_id": 42, "title": "Problem Set 3", "updated_at_canvas": "2026-07-01T09:00:00", "source_url": "https://school.instructure.com/courses/42/assignments/501", "content": "Solve problems 1-8, due next Friday."},
+  {"canvas_type": "announcement", "canvas_id": 900, "course_id": 42, "title": "Midterm date confirmed", "updated_at_canvas": "2026-07-02T14:00:00", "source_url": "https://school.instructure.com/courses/42/discussion_topics/900", "content": "Midterm is on July 20th, in-class."},
+  {"canvas_type": "page", "canvas_id": 77, "course_id": 42, "title": "Week 3 Reading Guide", "updated_at_canvas": "2026-07-01T08:00:00", "source_url": "https://school.instructure.com/courses/42/pages/77", "content": "Read chapters 4-5 before Wednesday's lecture."}
+]
