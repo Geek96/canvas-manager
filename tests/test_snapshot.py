@@ -46,6 +46,25 @@ class TestSnapshot(unittest.TestCase):
             self.assertIn("Due Friday.", first.read_text())
             self.assertIn("Due Monday now.", second.read_text())
 
+    def test_write_snapshot_overwrite_creates_file_at_latest_path(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            course_dir = Path(tmp)
+            path = snapshot_mod.write_snapshot_overwrite(course_dir, "pages", SAMPLE_OBJ, "2026-07-06T10:30:00")
+            self.assertEqual(path, course_dir / "raw" / "pages" / "12345" / "latest.md")
+            self.assertTrue(path.exists())
+            self.assertIn("Due Friday.", path.read_text())
+
+    def test_write_snapshot_overwrite_replaces_previous_content(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            course_dir = Path(tmp)
+            snapshot_mod.write_snapshot_overwrite(course_dir, "pages", SAMPLE_OBJ, "2026-07-06T10:30:00")
+            changed = dict(SAMPLE_OBJ, content="Due Monday now.")
+            path = snapshot_mod.write_snapshot_overwrite(course_dir, "pages", changed, "2026-07-09T08:00:00")
+            self.assertNotIn("Due Friday.", path.read_text())
+            self.assertIn("Due Monday now.", path.read_text())
+            all_files = list((course_dir / "raw" / "pages" / "12345").glob("*.md"))
+            self.assertEqual(len(all_files), 1)
+
     def test_write_sync_log_lists_new_updated_unchanged_missing(self):
         with tempfile.TemporaryDirectory() as tmp:
             course_dir = Path(tmp)

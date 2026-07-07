@@ -38,6 +38,15 @@ def write_snapshot(course_dir: Path, object_type: str, obj: dict, fetched_at_slu
     return snapshot_path
 
 
+def write_snapshot_overwrite(course_dir: Path, object_type: str, obj: dict, fetched_at: str) -> Path:
+    """CanvasManager Lite: keep only the latest version of a text/page object, no history."""
+    snapshot_dir = course_dir / "raw" / object_type / str(obj["canvas_id"])
+    snapshot_dir.mkdir(parents=True, exist_ok=True)
+    snapshot_path = snapshot_dir / "latest.md"
+    snapshot_path.write_text(format_snapshot(obj, fetched_at), encoding="utf-8")
+    return snapshot_path
+
+
 def write_sync_log(course_dir: Path, fetched_at_slug: str, object_type: str, new_ids, updated_ids, unchanged_count, missing_ids) -> Path:
     log_dir = course_dir / "raw" / "sync"
     log_dir.mkdir(parents=True, exist_ok=True)
