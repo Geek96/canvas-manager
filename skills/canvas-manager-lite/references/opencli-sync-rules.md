@@ -29,6 +29,20 @@ Some courses disable a tab (assignments, announcements, pages, files) —
 happens. Treat that as "this course has none of this object type," not as
 an error.
 
+**Don't stop at the module list.** `opencli browser cm extract` on a
+`/modules` page only returns the module→item table of contents (item
+titles and their `/modules/items/{item_id}` links) — not the actual page
+content. For every item that's a page or external URL, open its
+`/modules/items/{item_id}` link (it redirects to the real content page)
+and extract *that* page's full text — that's what goes into the object's
+`content` field, not the module list entry. A `wiki/资料摘要/` note written
+from a module's table of contents instead of the real page text is not
+useful to the student.
+
+Video/image module items: keep the item's URL only, don't transcribe or
+describe the media itself (see
+`../../canvas-manager/references/obsidian-rules.md`).
+
 ## Normalizing into the shared object schema
 
 Map extracted content into the same shape used by the full skill (see

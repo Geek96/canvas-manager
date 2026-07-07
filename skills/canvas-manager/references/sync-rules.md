@@ -30,6 +30,13 @@ Claude Code's `/schedule` skill, pointed at this skill's sync procedure.
 5. Repeat for each object type (`assignments`, `announcements`, `pages`,
    `modules`, `discussions`).
 
+For `modules`, don't stop at the module→item structure — that's a table of
+contents, not content. For every item that's a page or external URL, fetch
+that item too and use its actual text as the `content` field. A module
+object whose `content` is just a list of item titles is not useful for
+`wiki/资料摘要/`. Video/image items: keep the URL, don't transcribe or
+describe the media (see `obsidian-rules.md`).
+
 Never write to `raw/` directly — always go through `sync.py`, which is the
 only thing that knows how to avoid duplicating unchanged snapshots and how
 to avoid overwriting same-second writes.
