@@ -1,6 +1,6 @@
 {
   "name": "canvas-manager",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Sync Canvas LMS courses into a semester/course-organized Obsidian vault, with structured hand-off to daily planning tools",
   "author": {
     "name": "Geek96",
