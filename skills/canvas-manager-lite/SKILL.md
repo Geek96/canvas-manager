@@ -5,6 +5,13 @@ description: Use when a student wants to sync Canvas LMS content into an Obsidia
 
 # CanvasManager Lite
 
+## Obsidian authoring contract
+
+Before creating or updating any Obsidian artifact, read
+`references/obsidian-core.md`. This package-local Core is the portable
+baseline; the CanvasManager Lite rules and templates in this Skill take
+precedence whenever they are more specific.
+
 Same goal as `canvas-manager` — semester → course organized Obsidian vault,
 Canvas as source of truth, Obsidian as learning surface — but for students
 who can't get a Canvas API token. Instead of a Canvas MCP server, this

@@ -5,6 +5,13 @@ description: Use when a student wants to sync Canvas LMS course content (assignm
 
 # CanvasManager
 
+## Obsidian authoring contract
+
+Before creating or updating any Obsidian artifact, read
+`references/obsidian-core.md`. This package-local Core is the portable
+baseline; the CanvasManager rules and templates in this Skill take
+precedence whenever they are more specific.
+
 Turns a Canvas LMS course into a semester → course organized Obsidian vault.
 Canvas is the source of truth; Obsidian is the learning surface.
 `raw/` holds unedited Canvas evidence; `wiki/` holds what you've digested
