@@ -14,11 +14,11 @@
         │   ├── modules/{id}/{timestamp}.md
         │   └── files/{id}/...
         ├── wiki/
-        │   ├── 资料摘要/
-        │   ├── 概念/
-        │   ├── 主题/
-        │   ├── 综合/
+        │   ├── course_content/
+        │   ├── info/
+        │   ├── textbook_breakdown/     # only if the course has a real textbook
         │   └── assets/
+        ├── textbooks/                  # user-sourced textbook/reader files, not Canvas evidence
         ├── templates/
         └── 课程总览.md
 ```
@@ -29,7 +29,18 @@ Rules:
   edited or deleted, including by this skill.
 - `wiki/` is the learning surface. It can be updated, merged, rewritten, or
   deleted — but only the regions this skill generated (see
-  `obsidian-rules.md` for the ownership boundary with user-written content).
+  `obsidian-rules.md` for the ownership boundary with user-written content,
+  and for the `course_content/` vs `info/` classification standard).
+- `textbooks/` holds textbook/reader files the *user* sourced (bought, or a
+  legally free release) — never something this skill downloaded itself, and
+  never a pirated copy. This skill only ever links to files already placed
+  here; it does not fetch textbooks. Create this folder only once a real
+  file exists for the course — don't pre-provision an empty one.
+- `wiki/textbook_breakdown/` only exists for a course that actually has a
+  textbook in `textbooks/`. Don't create it as an empty placeholder for a
+  course with none (e.g. a course whose readings live entirely on an
+  external platform like Perusall) — an empty, never-used folder is exactly
+  the clutter this structure replaced (see `obsidian-rules.md`).
 - Course directory names default to `CourseCode - Course Name`
   (e.g. `CS101 - Intro to CS`); the user can rename at initialization.
 - This skill's own protocol (this file, `sync-rules.md`, etc.) lives only in

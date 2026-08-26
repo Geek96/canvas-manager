@@ -20,8 +20,11 @@ already-logged-in browser session.
 
 Shared with the full skill, unchanged:
 - Vault layout — see `../canvas-manager/references/vault-structure.md`
-- Wiki authoring / agent-managed-content boundary — see
-  `../canvas-manager/references/obsidian-rules.md`
+- Wiki authoring / agent-managed-content boundary, the `course_content/` vs
+  `info/` classification standard, and the `textbooks/`/`textbook_breakdown/`
+  handling — see `../canvas-manager/references/obsidian-rules.md` and
+  `../canvas-manager/SKILL.md`'s "Textbooks" section. Lite doesn't fetch
+  textbooks either — same rule, browser-driven or not.
 - Normalized object schema — see
   `../canvas-manager/references/canvas-object-model.md`
 - `/schedule`-based recurring sync, and the PlanVault hand-off file

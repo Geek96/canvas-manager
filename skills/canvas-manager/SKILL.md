@@ -39,7 +39,27 @@ directory.
 Follow `references/sync-rules.md` step by step — it covers calling the
 user's Canvas MCP, normalizing objects per
 `references/canvas-object-model.md`, invoking `scripts/sync.py`, and
-updating `wiki/` per `references/obsidian-rules.md`.
+updating `wiki/` per `references/obsidian-rules.md`. Every generated wiki
+note goes into `wiki/course_content/` or `wiki/info/` per the
+classification standard in `references/obsidian-rules.md` — judge by
+whether the note teaches something or explains how the course operates,
+never by how many raw objects it summarizes. Regenerate `wiki/info/文件索引.md`
+from the actual `raw/files/` + `textbooks/` listing each sync, don't
+hand-maintain it.
+
+## Textbooks
+
+This skill never downloads or sources a textbook itself — that's copyrighted
+material and not something to fetch on the student's behalf, free/legal
+releases included (ask the student to place those themselves). If the
+student has already put a real textbook/reader file in a course's
+`textbooks/` folder, link to it from `wiki/info/文件索引.md` and build
+`wiki/textbook_breakdown/` notes as they actually work through it — seeded
+only from coverage the course itself has stated (a syllabus content list, a
+chapter table), never fabricated from general knowledge of the book. If a
+course has no textbook, don't create `textbooks/` or
+`wiki/textbook_breakdown/` at all — an empty, unused folder is exactly the
+clutter this structure replaced.
 
 At the end of initialization, tell the user to set up three recurring runs
 via Claude Code's `/schedule` skill (daily 06:00 light sync, daily 18:00
