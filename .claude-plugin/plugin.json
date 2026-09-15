@@ -1,7 +1,7 @@
 {
   "name": "canvas-manager",
   "version": "0.2.1",
-  "description": "Sync Canvas LMS courses into a semester/course-organized Obsidian vault, with structured hand-off to daily planning tools",
+  "description": "Sync Canvas LMS courses into a semester/course-organized Obsidian vault, with structured hand-off to daily planning tools. Defaults to CanvasManager Lite (browser bridge, no API token needed); full API-based CanvasManager is available for schools that allow student tokens.",
   "author": {
     "name": "Geek96",
     "url": "https://github.com/Geek96"
@@ -9,7 +9,7 @@
   "license": "MIT",
   "keywords": ["canvas", "lms", "obsidian", "students", "planning"],
   "skills": [
-    "./skills/canvas-manager",
-    "./skills/canvas-manager-lite"
+    "./skills/canvas-manager-lite",
+    "./skills/canvas-manager"
   ]
 }
