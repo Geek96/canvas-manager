@@ -224,6 +224,20 @@ features). CanvasManager writes plan candidates to
 `{Root}/{Semester}/_exports/planvault-tasks.md` for PlanVault to consume —
 it does not do calendars, reminders, or daily planning itself.
 
+## Optional textbook-cracking integration
+
+If a course has a real textbook/reader placed in its `textbooks/` folder,
+[`textbook-cracking`](https://github.com/Geek96/textbook-cracking) (a
+separate skill, install it the same way as this one) builds out
+`wiki/textbook_breakdown/` — chapter summaries, concept pages, and
+content-model-specific detail pages (proofs for math, worked case studies
+for CS, document entries for a primary-source reader) — with real fidelity
+rules instead of ad hoc summarization. It already knows to nest its output
+under this repo's `wiki/textbook_breakdown/` folder when it detects a
+CanvasManager-managed course, so the two compose without collisions. Not
+required — CanvasManager works fine without it, just with a lighter-touch
+textbook treatment.
+
 ---
 
 ## Development

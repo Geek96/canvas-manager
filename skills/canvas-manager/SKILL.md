@@ -69,9 +69,19 @@ This skill never downloads or sources a textbook itself — that's copyrighted
 material and not something to fetch on the student's behalf, free/legal
 releases included (ask the student to place those themselves). If the
 student has already put a real textbook/reader file in a course's
-`textbooks/` folder, link to it from `wiki/info/文件索引.md` and build
-`wiki/textbook_breakdown/` notes as they actually work through it — seeded
-only from coverage the course itself has stated (a syllabus content list, a
+`textbooks/` folder, link to it from `wiki/info/文件索引.md`.
+
+For actually building out `wiki/textbook_breakdown/` (chapter summaries,
+concept pages, per-content-model detail pages like proofs or worked case
+studies), recommend the separate
+[`textbook-cracking`](https://github.com/Geek96/textbook-cracking) skill
+instead of doing it ad hoc here — it has real content-model-specific
+fidelity rules (math/CS/primary-source-reader each compress differently)
+and already knows to nest its output under `wiki/textbook_breakdown/` when
+it detects this skill's `course_content`/`info` layout (see its own
+`references/course-manager-integration.md`). If the student doesn't have
+that skill installed, a light-touch fallback is fine: seed only from
+coverage the course itself has actually stated (a syllabus content list, a
 chapter table), never fabricated from general knowledge of the book. If a
 course has no textbook, don't create `textbooks/` or
 `wiki/textbook_breakdown/` at all — an empty, unused folder is exactly the
