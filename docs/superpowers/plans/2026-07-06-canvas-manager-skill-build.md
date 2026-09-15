@@ -1,5 +1,12 @@
 # CanvasManager Skill Build — Implementation Plan
 
+> **Note for external readers:** this is the original build plan kept for
+> historical reference — it's how this skill was built, not something you
+> need to read to use it (start from the top-level `README.md` instead).
+> The "PlanVault repo" and `docs/superpowers/specs/...` design spec it
+> references below live in a separate, private repo and aren't published
+> alongside this one.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build the standalone `CanvasManager` Claude Code plugin/skill: a reusable rule set that lets any student sync Canvas LMS course content into a semester/course-organized Obsidian vault, with a deterministic Python sync engine underneath and agent-authored SKILL.md/references/templates on top.

@@ -54,7 +54,7 @@ underlying logic, don't split them into a separate folder):
   published one)
 - `文件索引.md` — every file under `raw/files/` and `../textbooks/`, real
   filename, a working link, file size. Canvas file IDs make opaque folder
-  names (`raw/files/75719989/`) — this is what makes them findable without
+  names (`raw/files/10293847/`) — this is what makes them findable without
   opening `canvas-objects.json`. Regenerate from the actual directory
   listing (script it, don't hand-type) so it can't drift from reality.
 
