@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.1
+
+Documented this skill's role in **CourseOS**: the required Evidence
+Driver component (see
+[course-manager](https://github.com/Geek96/course-manager)'s
+`FRAMEWORK.md`). Docs-only, no behavior change.
+
 ## 0.3.0
 
 **Breaking**: this skill no longer generates deadline-aware synthesis —

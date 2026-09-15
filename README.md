@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/AI_Agent-Skill-7C3AED?style=for-the-badge" alt="AI Agent Skill"/>
-  <img src="https://img.shields.io/badge/version-0.3.0-10B981?style=for-the-badge" alt="Version 0.3.0"/>
+  <img src="https://img.shields.io/badge/version-0.3.1-10B981?style=for-the-badge" alt="Version 0.3.1"/>
   <img src="https://img.shields.io/github/license/Geek96/canvas-manager?style=for-the-badge&color=6B7280" alt="MIT License"/>
 </p>
 
@@ -243,6 +243,19 @@ under this repo's `wiki/textbook_breakdown/` folder when it detects a
 CanvasManager-managed course, so the two compose without collisions. Not
 required — CanvasManager works fine without it, just with a lighter-touch
 textbook treatment.
+
+## CourseOS
+
+This skill fills the **Evidence Driver** role in
+[CourseOS](https://github.com/Geek96/course-manager) (see that repo's
+`FRAMEWORK.md`) — the required component that turns Canvas into the
+`raw/`+`wiki/course_content/`+`wiki/info/` shape `course-manager` and
+`textbook-cracking` build on. Any tool that produces that same shape
+(documented in `course-manager`'s `references/canvas-manager-integration.md`)
+could fill this role instead — `canvas-manager` and `canvas-manager-lite`
+are already two interchangeable implementations of it. Nothing here
+depends on being part of CourseOS; the other two skills are opt-in
+add-ons, not a requirement.
 
 ---
 
