@@ -55,11 +55,11 @@ After the normal per-object-type sync above, additionally:
 - Update `学期总览.md` and each course's `课程总览.md`.
 - Summarize the week's new/updated objects (from that week's
   `raw/sync/*.md` logs).
-- Draft next week's plan candidates into
-  `{Root}/{Semester}/_exports/planvault-tasks.md`, prioritized by **course
-  time structure** (due dates, exam dates) — not by which objects were
-  recently touched. A teacher uploading a file is not itself a signal of
-  urgency.
+
+Deadline-aware prioritization, a plan-candidate export, and anything that
+reads like "what should I focus on this week" belong to the separate
+[`course-manager`](https://github.com/Geek96/course-manager) skill, not
+this one — see `obsidian-rules.md`.
 
 ## Attachments
 

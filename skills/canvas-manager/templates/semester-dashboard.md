@@ -17,17 +17,15 @@ tags:
 
 ## 📚 本学期课程
 
-| 课程 | 近期 due | 备注 |
-|---|---|---|
-| [[{{course_name}}/课程总览\|{{course_name}}]] | {{due_count}} | |
+| 课程 | 备注 |
+|---|---|
+| [[{{course_name}}/课程总览\|{{course_name}}]] | |
 
-## 🔥 本周关注
-
-<!-- agent-managed:start id="weekly-focus" -->
-{{Weekly Digest 生成的内容——按 due date 优先级排的重点，不是按"哪些资源被更新"}}
-<!-- agent-managed:end -->
+{{如果装了 course-manager skill 并且已经跑过学期级同步，这里可以加一行链接
+到 [[综合/学期关注|学期关注]]（跨课程的紧急度汇总）——那不是 canvas-manager
+自己生成的，见 references/vault-structure.md 里 wiki/综合/ 的说明。}}
 
 ---
 
 > [!tip] Dataview（可选）
-> 如果装了 Dataview 插件，可以在这里聚合所有课程的 `综合/作业总览.md`，做一个跨课程的 due date 视图。
+> 如果装了 Dataview 插件，可以在这里聚合所有课程的信息；没装完全不影响这份 dashboard 本身的可用性。

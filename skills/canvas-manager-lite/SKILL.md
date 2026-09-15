@@ -28,7 +28,7 @@ Shared with the full skill, unchanged:
   textbooks either — same rule, browser-driven or not.
 - Normalized object schema — see
   `../canvas-manager/references/canvas-object-model.md`
-- `/schedule`-based recurring sync, and the PlanVault hand-off file
+- `/schedule`-based recurring sync
 
 What's different, and why — see `references/opencli-sync-rules.md`:
 - Text objects (assignments/announcements/pages/modules/discussions) keep

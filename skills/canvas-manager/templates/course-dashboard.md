@@ -19,14 +19,6 @@ tags:
 
 ---
 
-## 📌 近期 Due
-
-<!-- agent-managed:start id="upcoming-due" -->
-| 作业 | 类型 | 状态 | Due |
-|---|---|---|---|
-| {{title}} | {{type}} | {{status}} | {{due_at}} |
-<!-- agent-managed:end -->
-
 ## 🗂️ 模块
 
 <!-- agent-managed:start id="modules-index" -->
@@ -35,12 +27,17 @@ tags:
 
 ## 🔗 资源索引
 
-- [[作业总览]]
-- [[公告时间线]]
-- [[考试与截止日期]]
-- [[课程复习计划]]
+- [[文件索引]]
+
+{{如果装了 course-manager skill 并且已经跑过，取消下面的注释：
+- [[综合/作业总览|作业总览]]
+- [[综合/公告时间线|公告时间线]]
+- [[综合/考试与截止日期|考试与截止日期]]
+- [[综合/课程复习计划|课程复习计划]]
+这些不是 canvas-manager 自己生成的，见 references/vault-structure.md 里
+wiki/综合/ 的说明。}}
 
 ---
 
 > [!tip] Dataview（可选）
-> 如果这个 vault 装了 Dataview 插件，可以在这里加自动汇总查询，比如按 due_at 排序的作业列表。
+> 如果这个 vault 装了 Dataview 插件，可以在这里加自动汇总查询；没装完全不影响这份 dashboard 本身的可用性。

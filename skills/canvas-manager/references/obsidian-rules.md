@@ -41,22 +41,24 @@ content nature, not object count.
 | Practice material / skill-teaching content | weekly practice problems, a technique video | `course_content` |
 | An assignment/project's real prompt | the actual task description | `course_content` |
 
-`info/` also holds the fixed cross-cutting synthesis notes below (these
-aggregate across many raw objects for a specific operational purpose — same
-underlying logic, don't split them into a separate folder):
+`info/` also holds one fixed cross-cutting note, for the same reason as any
+other `info/` content — it's about operating the course, not learning from
+it:
 
-- `作业总览.md` — every assignment, due date, status
-- `公告时间线.md` — announcements in reverse chronological order
-- `考试与截止日期.md` — exam/deadline table
-- `课程复习计划.md` — review plan (only build this from real captured
-  structure — a syllabus schedule, a chapter list actually stated by the
-  course; never invent a week-by-week plan for a course that hasn't
-  published one)
 - `文件索引.md` — every file under `raw/files/` and `../textbooks/`, real
   filename, a working link, file size. Canvas file IDs make opaque folder
   names (`raw/files/10293847/`) — this is what makes them findable without
   opening `canvas-objects.json`. Regenerate from the actual directory
   listing (script it, don't hand-type) so it can't drift from reality.
+
+**This skill does not generate deadline-aware synthesis** — an assignment
+overview, an announcement timeline, an exam/deadline table, or a review
+plan. As of v0.3.0 that's the separate
+[`course-manager`](https://github.com/Geek96/course-manager) skill's job
+(`wiki/综合/`), built from this skill's evidence but not written by this
+skill. If the student wants that kind of cross-object view, point them at
+`course-manager` instead of building it here — this skill only ever writes
+one summary per raw object, in `course_content/` or `info/`.
 
 ## Ownership boundary (read this before editing any wiki file)
 

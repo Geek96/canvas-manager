@@ -98,11 +98,14 @@ OS Downloads folder, not just rendered as a page). Move it into place via
   explicitly says yes. The previous version is never deleted, even after a
   confirmed replacement — both live under their own `raw/files/{file_id}/`.
 
-## Scheduling and PlanVault hand-off
+## Scheduling
 
 Same as the full skill: at the end of initialization, ask whether to set up
 the three recurring `/schedule` runs now or later (see
 `../../canvas-manager/references/interaction-style.md`) — never set them up
-unasked. Deep syncs export plan candidates to
-`{Root}/{Semester}/_exports/planvault-tasks.md`. Lite does not change
-either of these.
+unasked. Lite does not change this.
+
+For deadline-aware synthesis and a PlanVault hand-off file, see the
+separate [`course-manager`](https://github.com/Geek96/course-manager)
+skill — same as the full variant, this skill only ever writes one summary
+per raw object.

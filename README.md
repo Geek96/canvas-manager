@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/AI_Agent-Skill-7C3AED?style=for-the-badge" alt="AI Agent Skill"/>
-  <img src="https://img.shields.io/badge/version-0.2.1-10B981?style=for-the-badge" alt="Version 0.2.1"/>
+  <img src="https://img.shields.io/badge/version-0.3.0-10B981?style=for-the-badge" alt="Version 0.3.0"/>
   <img src="https://img.shields.io/github/license/Geek96/canvas-manager?style=for-the-badge&color=6B7280" alt="MIT License"/>
 </p>
 
@@ -9,7 +9,7 @@
 <p align="center">
   <strong>A Claude Code skill that syncs Canvas LMS courses into a semester → course organized Obsidian vault</strong>
   <br/>
-  <code>Canvas → raw evidence → digested wiki notes → PlanVault hand-off</code>
+  <code>Canvas → raw evidence → digested wiki notes</code>
   <br/><br/>
   Defaults to <strong>CanvasManager Lite</strong> — no Canvas API token required
 </p>
@@ -39,9 +39,11 @@
 - **Obsidian-native output** — YAML frontmatter, `> [!callouts]`,
   `[[wiki-links]]` — no Obsidian plugin required, the skill writes plain
   files directly to your vault folder
-- **Structured PlanVault hand-off** — optional plan-candidate export for a
-  separate daily-planning tool to consume; this skill itself never
-  schedules or reminds
+- **Scoped to evidence, not synthesis** — one digested summary per raw
+  object and nothing more; for a deadline-aware assignment overview,
+  announcement timeline, or PlanVault hand-off built from this skill's
+  evidence, see the separate
+  [`course-manager`](https://github.com/Geek96/course-manager) skill
 
 ---
 
@@ -153,7 +155,7 @@ under `raw/`, instead of Lite's latest-version-only storage.
 │         raw/ (evidence) → wiki/ (digested notes)               │
 │                            │                                   │
 │                            ▼                                   │
-│         optional: {Semester}/_exports/planvault-tasks.md       │
+│      optional: course-manager (separate skill) → wiki/综合/     │
 │                     → PlanVault (separate skill)                │
 └───────────────────────────────────────────────────────────────┘
 ```
@@ -216,13 +218,17 @@ canvas-manager/
 
 ---
 
-## Optional PlanVault integration
+## Optional course-manager integration
 
-PlanVault users who also use Canvas can pull this repo in as a git
-submodule (opt-in, not required for PlanVault's core daily-planning
-features). CanvasManager writes plan candidates to
-`{Root}/{Semester}/_exports/planvault-tasks.md` for PlanVault to consume —
-it does not do calendars, reminders, or daily planning itself.
+This skill intentionally stops at raw evidence and per-object summaries —
+no assignment overview, no announcement timeline, no exam/deadline table,
+no PlanVault hand-off. For any of that, install
+[`course-manager`](https://github.com/Geek96/course-manager) alongside
+this skill: it reads `raw/`, `wiki/course_content/`, and `wiki/info/`
+read-only and builds those deadline-aware views in `wiki/综合/`, plus a
+merge-safe staging file for a daily-planning tool like PlanVault to
+consume. Not required — CanvasManager works fine on its own, just without
+any cross-object synthesis.
 
 ## Optional textbook-cracking integration
 

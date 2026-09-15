@@ -17,6 +17,7 @@
         │   ├── course_content/
         │   ├── info/
         │   ├── textbook_breakdown/     # only if the course has a real textbook
+        │   ├── 综合/                   # only if the course-manager skill is also installed and run
         │   └── assets/
         ├── textbooks/                  # user-sourced textbook/reader files, not Canvas evidence
         ├── templates/
@@ -41,6 +42,12 @@ Rules:
   course with none (e.g. a course whose readings live entirely on an
   external platform like Perusall) — an empty, never-used folder is exactly
   the clutter this structure replaced (see `obsidian-rules.md`).
+- `wiki/综合/` is not created or written by this skill at all — it's owned
+  entirely by the separate
+  [`course-manager`](https://github.com/Geek96/course-manager) skill (an
+  assignment overview, announcement timeline, exam/deadline table, and
+  review plan built from this skill's evidence). It only exists in a
+  course directory if that skill has also been installed and run there.
 - Course directory names default to `CourseCode - Course Name`
   (e.g. `CS101 - Intro to CS`); the user can rename at initialization.
 - This skill's own protocol (this file, `sync-rules.md`, etc.) lives only in

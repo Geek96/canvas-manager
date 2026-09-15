@@ -93,12 +93,14 @@ runs via Claude Code's `/schedule` skill now (daily 06:00 light sync, daily
 `references/interaction-style.md` — this skill does not assume any
 automation is already running and never sets it up unasked.
 
-## Hand-off to planning tools
+## Deadline-aware views and planning hand-off
 
-This skill does not do calendars, daily planning, or reminders. Each deep
-sync writes plan candidates to
-`{Root}/{Semester}/_exports/planvault-tasks.md` — task title, course, type
-(`assignment`/`quiz`/`exam`/`reading`/`project`), `due_at`,
-`estimated_workload`, `source_url`, `source_snapshot`, `priority_hint`.
-A planning tool (e.g. PlanVault) is expected to read that file; this skill
-never schedules or reminds on its own.
+This skill does not do calendars, daily planning, reminders, or any
+cross-object synthesis (an assignment overview, an announcement timeline,
+an exam/deadline table, a review plan, or a PlanVault hand-off file) — it
+only ever writes one summary per raw object. For any of that, point the
+student at the separate
+[`course-manager`](https://github.com/Geek96/course-manager) skill: it
+reads this skill's evidence (`raw/`, `wiki/course_content/`, `wiki/info/`)
+read-only and builds those views in `wiki/综合/`, plus a merge-safe staging
+file for a planning tool like PlanVault to consume.
