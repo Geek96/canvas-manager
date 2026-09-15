@@ -1,6 +1,6 @@
 ---
 name: canvas-manager
-description: Use when a student wants to sync Canvas LMS course content (assignments, announcements, pages, modules) into an organized Obsidian vault, or asks to initialize/sync/review a semester or course tracked by CanvasManager.
+description: Use when a student who already has (or can generate) a Canvas API token and a Canvas MCP server connected wants to sync Canvas LMS course content (assignments, announcements, pages, modules) into an organized Obsidian vault, or asks to initialize/sync/review a semester or course tracked by CanvasManager. Most students can't self-generate an API token — if the student doesn't have one, or isn't sure, use `canvas-manager-lite` instead (it's the default, no-token variant); don't get stuck asking for MCP setup before checking that.
 ---
 
 # CanvasManager
@@ -17,15 +17,31 @@ Canvas is the source of truth; Obsidian is the learning surface.
 `raw/` holds unedited Canvas evidence; `wiki/` holds what you've digested
 from it. See `references/vault-structure.md` for the full layout.
 
+**Before anything else**: confirm a Canvas MCP server is actually connected
+and the student has a working API token. If either is missing, switch to
+`../canvas-manager-lite/SKILL.md` instead — don't walk the student through
+generating an API token or installing an MCP server as a blocking
+prerequisite; most institutions (Georgia Tech included) disable
+self-service tokens for students, and Lite needs neither. The one reason to
+still prefer this full variant even when Lite would also work: it keeps a
+full timestamped history per object under `raw/`, not just the latest
+version — worth surfacing if the student cares about that.
+
 ## First-time initialization
+
+See `references/interaction-style.md` for how to ask these — question 3 in
+particular should be a pick-list built from the student's actual live
+course list, not a cold open-ended question.
 
 Ask the user:
 
 1. Where should the vault root live? (a folder path)
-2. What's the current semester name? (e.g. `2026Spring`)
-3. Which Canvas courses to track this semester, and does the default
-   `CourseCode - Course Name` directory naming work, or do they want to
-   rename any course directory?
+2. What's the current semester name? (e.g. `2026Spring`; suggest a default
+   inferred from today's date and let them just confirm it)
+3. Call your Canvas MCP's course-listing tool and present the student's
+   current-term courses as a numbered pick-list. Which should be tracked
+   this semester, and does the default `CourseCode - Course Name` directory
+   naming work for each, or do they want to rename any?
 
 Then create the directory skeleton from `references/vault-structure.md` and
 the templates in `templates/` for each course, plus the semester dashboard.
@@ -61,10 +77,11 @@ course has no textbook, don't create `textbooks/` or
 `wiki/textbook_breakdown/` at all — an empty, unused folder is exactly the
 clutter this structure replaced.
 
-At the end of initialization, tell the user to set up three recurring runs
-via Claude Code's `/schedule` skill (daily 06:00 light sync, daily 18:00
-light sync, Sunday 18:00 deep sync/Weekly Digest) — this skill does not
-assume any automation is already running.
+At the end of initialization, ask whether to set up the three recurring
+runs via Claude Code's `/schedule` skill now (daily 06:00 light sync, daily
+18:00 light sync, Sunday 18:00 deep sync/Weekly Digest) or later — see
+`references/interaction-style.md` — this skill does not assume any
+automation is already running and never sets it up unasked.
 
 ## Hand-off to planning tools
 

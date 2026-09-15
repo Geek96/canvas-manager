@@ -6,7 +6,15 @@ reusing the student's already-logged-in session. Everything downstream
 (vault structure, `wiki/` authoring rules) is shared with the full
 CanvasManager skill — only how raw data is captured and stored differs.
 This assumes `opencli doctor` reports the browser extension connected; if
-not, tell the user to install/connect it first.
+not, see `SKILL.md`'s initialization section for how to install it — don't
+restate install steps here, they live in one place.
+
+When a first-time sync covers several courses (or one course turns out to
+have a lot of modules) and the total effort isn't knowable ahead of time,
+ask whether to process everything in one pass or one course at a time with
+a pause to look before continuing — see
+`../../canvas-manager/references/interaction-style.md`. Don't silently pick
+one.
 
 ## Navigating Canvas
 
@@ -35,9 +43,9 @@ titles and their `/modules/items/{item_id}` links) — not the actual page
 content. For every item that's a page or external URL, open its
 `/modules/items/{item_id}` link (it redirects to the real content page)
 and extract *that* page's full text — that's what goes into the object's
-`content` field, not the module list entry. A `wiki/资料摘要/` note written
-from a module's table of contents instead of the real page text is not
-useful to the student.
+`content` field, not the module list entry. A `wiki/course_content/` or
+`wiki/info/` note written from a module's table of contents instead of the
+real page text is not useful to the student.
 
 Video/image module items: keep the item's URL only, don't transcribe or
 describe the media itself (see
@@ -92,7 +100,9 @@ OS Downloads folder, not just rendered as a page). Move it into place via
 
 ## Scheduling and PlanVault hand-off
 
-Same as the full skill: guide the user to set up recurring `/schedule`
-runs, and export plan candidates to
+Same as the full skill: at the end of initialization, ask whether to set up
+the three recurring `/schedule` runs now or later (see
+`../../canvas-manager/references/interaction-style.md`) — never set them up
+unasked. Deep syncs export plan candidates to
 `{Root}/{Semester}/_exports/planvault-tasks.md`. Lite does not change
 either of these.

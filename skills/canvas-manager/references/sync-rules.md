@@ -7,8 +7,15 @@
   (see below).
 
 This skill does not assume any particular automation is running. At the end
-of initialization, tell the user to set these three runs up themselves via
-Claude Code's `/schedule` skill, pointed at this skill's sync procedure.
+of initialization, ask whether to set these three runs up now via Claude
+Code's `/schedule` skill, pointed at this skill's sync procedure, or later
+— see `interaction-style.md`. Never set them up unasked.
+
+When a first-time sync covers several courses (or one course turns out to
+have a lot of modules) and the total effort isn't knowable ahead of time,
+ask whether to process everything in one pass or one course at a time with
+a pause to look before continuing — see `interaction-style.md`. Don't
+silently pick one.
 
 ## Sync procedure (per course, per object type)
 
@@ -34,8 +41,8 @@ For `modules`, don't stop at the module→item structure — that's a table of
 contents, not content. For every item that's a page or external URL, fetch
 that item too and use its actual text as the `content` field. A module
 object whose `content` is just a list of item titles is not useful for
-`wiki/资料摘要/`. Video/image items: keep the URL, don't transcribe or
-describe the media (see `obsidian-rules.md`).
+`wiki/course_content/` or `wiki/info/`. Video/image items: keep the URL,
+don't transcribe or describe the media (see `obsidian-rules.md`).
 
 Never write to `raw/` directly — always go through `sync.py`, which is the
 only thing that knows how to avoid duplicating unchanged snapshots and how
