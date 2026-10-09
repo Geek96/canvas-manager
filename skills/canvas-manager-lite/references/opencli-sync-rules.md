@@ -18,18 +18,24 @@ one.
 
 ## Navigating Canvas
 
-Pick one session name per sync run (e.g. `cm`) and reuse it across calls so
-the tab stays alive:
+Use one browser session **per course**, named `cm-{course-slug}` (the
+course code in lower case, e.g. `cm-cs-1331`), and reuse it across calls
+so the tab stays alive. Never share one session name between courses:
+two syncs driving the same session fight over one tab and each extracts
+the other's pages. Sync one course at a time, and release the tab when the
+course is done with `opencli browser cm-{course-slug} close`.
+
+The examples below use `cm-cs-1331`:
 
 ```bash
-opencli browser cm open https://{institution}.instructure.com/courses
-opencli browser cm extract          # course list
-opencli browser cm open https://{institution}.instructure.com/courses/{id}/assignments
-opencli browser cm extract          # assignment list for one course
-opencli browser cm open https://{institution}.instructure.com/courses/{id}/modules
-opencli browser cm extract          # full module -> item tree
-opencli browser cm open https://{institution}.instructure.com/courses/{id}/modules/items/{item_id}
-opencli browser cm extract          # one page's full rich-text content
+opencli browser cm-cs-1331 open https://{institution}.instructure.com/courses
+opencli browser cm-cs-1331 extract          # course list
+opencli browser cm-cs-1331 open https://{institution}.instructure.com/courses/{id}/assignments
+opencli browser cm-cs-1331 extract          # assignment list for one course
+opencli browser cm-cs-1331 open https://{institution}.instructure.com/courses/{id}/modules
+opencli browser cm-cs-1331 extract          # full module -> item tree
+opencli browser cm-cs-1331 open https://{institution}.instructure.com/courses/{id}/modules/items/{item_id}
+opencli browser cm-cs-1331 extract          # one page's full rich-text content
 ```
 
 Some courses disable a tab (assignments, announcements, pages, files) —
@@ -37,7 +43,7 @@ Some courses disable a tab (assignments, announcements, pages, files) —
 happens. Treat that as "this course has none of this object type," not as
 an error.
 
-**Don't stop at the module list.** `opencli browser cm extract` on a
+**Don't stop at the module list.** `opencli browser cm-cs-1331 extract` on a
 `/modules` page only returns the module→item table of contents (item
 titles and their `/modules/items/{item_id}` links) — not the actual page
 content. For every item that's a page or external URL, open its
