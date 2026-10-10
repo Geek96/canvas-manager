@@ -86,6 +86,12 @@ writes only `raw/{type}/{id}/latest.md` and overwrites it in place when
 content changes. A content-hash check still skips the write entirely when
 nothing changed, so re-running sync with no Canvas-side changes is a no-op.
 
+## Grades: submission status and scores
+
+After the text objects, also sync each course's Grades page (one object,
+`--object-type grades`) — see `grades-sync.md`. course-manager uses it to
+mark submitted work done and show scores.
+
 ## Files: additive by default, replacement needs confirmation
 
 Download real attachments by navigating to their Canvas download URL —
