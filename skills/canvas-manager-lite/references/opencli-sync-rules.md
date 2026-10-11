@@ -92,6 +92,12 @@ After the text objects, also sync each course's Grades page (one object,
 `--object-type grades`) — see `grades-sync.md`. course-manager uses it to
 mark submitted work done and show scores.
 
+## External platforms (Gradescope, Perusall, Ed, Piazza, …)
+
+When `.courseos/STATE.md` lists external platforms for a course, sync
+them in the same browser session after Canvas — see `platform-sync.md`.
+Read only; never submit or post.
+
 ## Files: additive by default, replacement needs confirmation
 
 Download real attachments by navigating to their Canvas download URL —
