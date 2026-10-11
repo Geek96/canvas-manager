@@ -1,6 +1,6 @@
 # Grades page sync (submission status and scores)
 
-CourseCenter and course-manager need to know which assignments the
+CourseOS and course-manager need to know which assignments the
 student has already submitted (to mark them done) and their scores (for
 the archive and regrade decisions). Lite gets this from the course's
 Canvas **Grades** page — one page per course, every assignment on it.

@@ -6,7 +6,7 @@ readings, Ed / Piazza announcements. Their deadlines and submission state
 never show up in Canvas data, so sync them alongside the course.
 
 **Which platforms to sync**: `.courseos/STATE.md` → "外部平台同步" lists,
-per course, the platforms the student switched on in CourseCenter. Only
+per course, the platforms the student switched on in CourseOS. Only
 touch those. Platforms not listed: leave alone.
 
 ## General rules
