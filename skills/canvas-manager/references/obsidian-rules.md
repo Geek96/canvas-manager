@@ -45,11 +45,12 @@ content nature, not object count.
 other `info/` content — it's about operating the course, not learning from
 it:
 
-- `文件索引.md` — every file under `raw/files/` and `../textbooks/`, real
-  filename, a working link, file size. Canvas file IDs make opaque folder
-  names (`raw/files/10293847/`) — this is what makes them findable without
-  opening `canvas-objects.json`. Regenerate from the actual directory
-  listing (script it, don't hand-type) so it can't drift from reality.
+- `文件索引.md` — every file under `../readings/` and `../textbooks/`,
+  real filename, a working link, file size. The raw store's
+  `files/10293847/` folders are opaque Canvas IDs — `readings/` (human-named
+  copies extracted each sync) is what makes them findable without opening
+  `canvas-objects.json`. Regenerate from the actual directory listing
+  (script it, don't hand-type) so it can't drift from reality.
 
 **This skill does not generate deadline-aware synthesis** — an assignment
 overview, an announcement timeline, an exam/deadline table, or a review
@@ -85,14 +86,18 @@ When updating a wiki file:
 4. Anything outside marker pairs (the student's own prose) is left
    byte-for-byte untouched.
 
-## What goes in wiki vs. what stays in raw
+## What goes in wiki vs. what stays in the raw store
 
-- `raw/` keeps the Canvas object as received — never summarized, never
-  rewritten.
+- The raw store (`{Semester}.data/{Course}/raw/`, outside the vault) keeps
+  the Canvas object as received — never summarized, never rewritten.
+- `readings/` holds human-readable copies of teacher-uploaded documents
+  extracted from the raw store — the read-in-Obsidian layer. Copies, never
+  symlinks; regenerated each sync.
 - `wiki/course_content/` and `wiki/info/` each hold one digested note per
   raw object (sorted between them per the classification standard above),
-  referencing the object's `source_snapshot` path so it's traceable back to
-  the evidence it was written from.
+  referencing the object's `source_snapshot` path (relative to
+  `{Semester}.data/{Course}/`) so it's traceable back to the evidence it
+  was written from.
 - `wiki/textbook_breakdown/` is synthesis the agent builds up over time as
   the student actually works through the textbook in `../textbooks/` —
   chapter/section notes, not a summary of a raw Canvas object. Seed a

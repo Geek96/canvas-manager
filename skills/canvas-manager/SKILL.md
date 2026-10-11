@@ -14,8 +14,10 @@ precedence whenever they are more specific.
 
 Turns a Canvas LMS course into a semester → course organized Obsidian vault.
 Canvas is the source of truth; Obsidian is the learning surface.
-`raw/` holds unedited Canvas evidence; `wiki/` holds what you've digested
-from it. See `references/vault-structure.md` for the full layout.
+The raw store (`{Semester}.data/{Course}/raw/`, outside the vault) holds
+unedited Canvas evidence; `wiki/` holds what you've digested from it;
+`readings/` holds human-readable copies of teacher-uploaded documents.
+See `references/vault-structure.md` for the full layout.
 
 **Before anything else**: confirm a Canvas MCP server is actually connected
 and the student has a working API token. If either is missing, switch to
@@ -24,8 +26,8 @@ generating an API token or installing an MCP server as a blocking
 prerequisite; most institutions (Georgia Tech included) disable
 self-service tokens for students, and Lite needs neither. The one reason to
 still prefer this full variant even when Lite would also work: it keeps a
-full timestamped history per object under `raw/`, not just the latest
-version — worth surfacing if the student cares about that.
+full timestamped history per object in the vault-outside raw store, not
+just the latest version — worth surfacing if the student cares about that.
 
 ## First-time initialization
 
@@ -60,8 +62,8 @@ note goes into `wiki/course_content/` or `wiki/info/` per the
 classification standard in `references/obsidian-rules.md` — judge by
 whether the note teaches something or explains how the course operates,
 never by how many raw objects it summarizes. Regenerate `wiki/info/文件索引.md`
-from the actual `raw/files/` + `textbooks/` listing each sync, don't
-hand-maintain it.
+from the actual `readings/` + `textbooks/` listing each sync (after running
+`scripts/extract_readings.py`), don't hand-maintain it.
 
 ## Textbooks
 
@@ -101,6 +103,7 @@ an exam/deadline table, a review plan, or a PlanVault hand-off file) — it
 only ever writes one summary per raw object. For any of that, point the
 student at the separate
 [`course-manager`](https://github.com/Geek96/course-manager) skill: it
-reads this skill's evidence (`raw/`, `wiki/course_content/`, `wiki/info/`)
+reads this skill's evidence (the vault-outside raw store,
+`{Course}/readings/`, `wiki/course_content/`, `wiki/info/`)
 read-only and builds those views in `wiki/综合/`, plus a merge-safe staging
 file for a planning tool like PlanVault to consume.

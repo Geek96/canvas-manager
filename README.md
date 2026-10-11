@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/AI_Agent-Skill-7C3AED?style=for-the-badge" alt="AI Agent Skill"/>
-  <img src="https://img.shields.io/badge/version-0.3.1-10B981?style=for-the-badge" alt="Version 0.3.1"/>
+  <img src="https://img.shields.io/badge/version-0.4.0-10B981?style=for-the-badge" alt="Version 0.4.0"/>
   <img src="https://img.shields.io/github/license/Geek96/canvas-manager?style=for-the-badge&color=6B7280" alt="MIT License"/>
 </p>
 
@@ -25,9 +25,11 @@
 - **Two ways to read Canvas** — `canvas-manager-lite` drives your own logged-in
   browser via `opencli` (default, no API token needed); `canvas-manager`
   talks to a Canvas MCP server if your institution allows student API tokens
-- **Evidence-first vault** — `raw/` keeps unedited Canvas snapshots per
-  object; `wiki/` holds the digested notes built from them, never the other
-  way around
+- **Evidence-first, vault-outside evidence** — a raw store outside the
+  Obsidian vault (`{Semester}.data/{Course}/raw/`) keeps unedited Canvas
+  snapshots per object; `wiki/` holds the digested notes built from them,
+  never the other way around; `readings/` holds human-readable copies of
+  teacher-uploaded documents for reading in Obsidian
 - **Idempotent, content-hashed sync** — re-running a sync with nothing
   changed on Canvas is a no-op; a Python engine (stdlib only, unit-tested)
   owns diffing/manifest state so that part isn't left to agent judgment
@@ -135,7 +137,8 @@ course/assignment/announcement/module/page endpoints to Claude Code, e.g.
 Configure it with your token per that server's own setup instructions.
 
 The trade-off for the extra setup: full timestamped history per object
-under `raw/`, instead of Lite's latest-version-only storage.
+in the vault-outside raw store, instead of Lite's latest-version-only
+storage.
 
 ---
 
@@ -152,7 +155,8 @@ under `raw/`, instead of Lite's latest-version-only storage.
 │           └───────────────┬───────────────────┘                │
 │                            ▼                                   │
 │                 shared vault structure                         │
-│         raw/ (evidence) → wiki/ (digested notes)               │
+│   .data/{Course}/raw/ (evidence, vault-outside)                │
+│         → wiki/ (digested notes) + readings/ (documents)       │
 │                            │                                   │
 │                            ▼                                   │
 │      optional: course-manager (separate skill) → wiki/综合/     │
@@ -185,8 +189,8 @@ to track (default `CourseCode - Course Name` directory naming, editable).
 ```
 
 Reads each tracked course's assignments/announcements/pages/modules,
-diffs against what's already in `raw/`, and updates `wiki/` notes only for
-what actually changed.
+diffs against what's already in the vault-outside raw store, and updates
+`wiki/` notes only for what actually changed.
 
 ### Recurring sync (optional)
 
@@ -210,7 +214,8 @@ canvas-manager/
 │       ├── references/                # vault structure, object model,
 │       │                              # wiki authoring rules (shared by both)
 │       ├── templates/                 # shared wiki templates
-│       └── scripts/sync.py, manifest.py, snapshot.py
+│       └── scripts/sync.py, manifest.py, snapshot.py,
+│           extract_readings.py
 ├── tests/                             # 29 unit tests, stdlib unittest
 ├── .claude-plugin/plugin.json
 └── README.md
@@ -224,7 +229,8 @@ This skill intentionally stops at raw evidence and per-object summaries —
 no assignment overview, no announcement timeline, no exam/deadline table,
 no PlanVault hand-off. For any of that, install
 [`course-manager`](https://github.com/Geek96/course-manager) alongside
-this skill: it reads `raw/`, `wiki/course_content/`, and `wiki/info/`
+this skill: it reads the vault-outside raw store, `readings/`,
+`wiki/course_content/`, and `wiki/info/`
 read-only and builds those deadline-aware views in `wiki/综合/`, plus a
 merge-safe staging file for a daily-planning tool like PlanVault to
 consume. Not required — CanvasManager works fine on its own, just without
@@ -249,8 +255,8 @@ textbook treatment.
 This skill fills the **Evidence Driver** role in
 [CourseOS](https://github.com/Geek96/course-manager) (see that repo's
 `FRAMEWORK.md`) — the required component that turns Canvas into the
-`raw/`+`wiki/course_content/`+`wiki/info/` shape `course-manager` and
-`textbook-cracking` build on. Any tool that produces that same shape
+vault-outside raw store + `readings/` + `wiki/course_content/` + `wiki/info/`
+shape `course-manager` and `textbook-cracking` build on. Any tool that produces that same shape
 (documented in `course-manager`'s `references/canvas-manager-integration.md`)
 could fill this role instead — `canvas-manager` and `canvas-manager-lite`
 are already two interchangeable implementations of it. Nothing here

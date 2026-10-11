@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """CanvasManager sync engine: diffs incoming Canvas objects against the manifest
-and writes new/changed raw snapshots without duplicating unchanged ones."""
+and writes new/changed raw snapshots without duplicating unchanged ones.
+
+v0.4.0: the raw store lives outside the Obsidian vault at
+`{Semester}.data/{Course}/raw/` — pass it via --data-dir. `latest_snapshot`
+manifest values are relative to the data dir (e.g. `raw/assignments/...`).
+"""
 import argparse
 import json
 import sys
@@ -12,8 +17,8 @@ import manifest as manifest_mod  # noqa: E402
 import snapshot as snapshot_mod  # noqa: E402
 
 
-def run_sync(course_dir: Path, object_type: str, objects: list, now: datetime) -> dict:
-    manifest_path = course_dir / "raw" / "_manifest" / "canvas-objects.json"
+def run_sync(data_dir: Path, object_type: str, objects: list, now: datetime) -> dict:
+    manifest_path = data_dir / "raw" / "_manifest" / "canvas-objects.json"
     state = manifest_mod.load_manifest(manifest_path)
 
     fetched_at = now.isoformat(timespec="seconds")
@@ -34,14 +39,14 @@ def run_sync(course_dir: Path, object_type: str, objects: list, now: datetime) -
             continue
 
         snapshot_path = snapshot_mod.write_snapshot(
-            course_dir, object_type, obj, fetched_at_slug, fetched_at
+            data_dir, object_type, obj, fetched_at_slug, fetched_at
         )
         state[key] = {
             "canvas_type": obj["canvas_type"],
             "canvas_id": obj["canvas_id"],
             "course_id": obj["course_id"],
             "title": obj["title"],
-            "latest_snapshot": str(snapshot_path.relative_to(course_dir)),
+            "latest_snapshot": str(snapshot_path.relative_to(data_dir)),
             "last_canvas_updated_at": obj["updated_at_canvas"],
             "content_hash": content_hash,
             "status": "active",
@@ -54,7 +59,7 @@ def run_sync(course_dir: Path, object_type: str, objects: list, now: datetime) -
             missing_ids.append(key)
 
     manifest_mod.save_manifest(manifest_path, state)
-    snapshot_mod.write_sync_log(course_dir, fetched_at_slug, object_type, new_ids, updated_ids, unchanged_count, missing_ids)
+    snapshot_mod.write_sync_log(data_dir, fetched_at_slug, object_type, new_ids, updated_ids, unchanged_count, missing_ids)
 
     return {
         "new": new_ids,
@@ -65,14 +70,15 @@ def run_sync(course_dir: Path, object_type: str, objects: list, now: datetime) -
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Sync one Canvas object type into a course's raw/ store.")
-    parser.add_argument("--course-dir", required=True, type=Path)
+    parser = argparse.ArgumentParser(description="Sync one Canvas object type into a course's vault-outside raw store.")
+    parser.add_argument("--data-dir", required=True, type=Path,
+                        help="e.g. {Root}/{Semester}.data/{Course}")
     parser.add_argument("--object-type", required=True, help="e.g. assignments, announcements, pages, modules")
     parser.add_argument("--input", required=True, type=Path, help="JSON file: list of normalized Canvas objects")
     args = parser.parse_args()
 
     objects = json.loads(args.input.read_text(encoding="utf-8"))
-    result = run_sync(args.course_dir, args.object_type, objects, datetime.now())
+    result = run_sync(args.data_dir, args.object_type, objects, datetime.now())
     print(json.dumps(result, indent=2))
 
 

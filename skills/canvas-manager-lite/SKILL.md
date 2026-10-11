@@ -32,7 +32,8 @@ Shared with the full skill, unchanged:
 
 What's different, and why — see `references/opencli-sync-rules.md`:
 - Text objects (assignments/announcements/pages/modules/discussions) keep
-  only their **latest** version in `raw/` (no history), because browser
+  only their **latest** version in the vault-outside raw store
+  (`{Semester}.data/{Course}/raw/`, no history), because browser
   scraping can't see Canvas's real `updated_at` timestamps, so a full
   timestamped history isn't trustworthy anyway.
 - File attachments are added automatically when new, but an existing

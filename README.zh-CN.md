@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/badge/AI_Agent-Skill-7C3AED?style=for-the-badge" alt="AI Agent Skill"/>
-  <img src="https://img.shields.io/badge/version-0.3.1-10B981?style=for-the-badge" alt="Version 0.3.1"/>
+  <img src="https://img.shields.io/badge/version-0.4.0-10B981?style=for-the-badge" alt="Version 0.4.0"/>
   <img src="https://img.shields.io/github/license/Geek96/canvas-manager?style=for-the-badge&color=6B7280" alt="MIT License"/>
 </p>
 
@@ -23,7 +23,7 @@
 ## ✨ 特性
 
 - **两种读取 Canvas 的方式** —— `canvas-manager-lite` 通过 `opencli` 驱动你自己已登录的浏览器（默认，不需要 API token）；`canvas-manager` 在你学校允许学生申请 API token 的情况下对接 Canvas MCP server
-- **证据优先的 vault** —— `raw/` 保存每个对象未经编辑的 Canvas 快照；`wiki/` 保存基于这些快照消化出来的笔记，绝不反过来
+- **证据优先、证据在 vault 之外** —— vault 外的 raw 证据库（`{Semester}.data/{Course}/raw/`）保存每个对象未经编辑的 Canvas 快照；`wiki/` 保存基于这些快照消化出来的笔记，绝不反过来；`readings/` 保存老师上传资料的人类可读副本，方便在 Obsidian 里阅读
 - **幂等、按内容哈希去重的同步** —— Canvas 上没有变化的情况下重新跑一次同步是空操作；一个 Python 引擎（仅用标准库，带单元测试）负责 diff/manifest 状态管理，这一步不留给 agent 自己判断
 - **绝不静默覆盖** —— 一个可能是你已有文件新版本的文件会被标记为 `needs_confirmation`，不会自动替换
 - **Agent 管理区域标记规则** —— 本 skill 只会触碰它自己生成的那部分 wiki 文件内容；同一文件里你自己手写的笔记永远不会被碰
@@ -96,7 +96,7 @@ opencli doctor
 
 **2. 连接一个 Canvas MCP server**——任何能把 Canvas 的课程/作业/公告/模块/页面接口暴露给 Claude Code 的 MCP server 都行，比如 [vishalsachdev/canvas-mcp](https://github.com/vishalsachdev/canvas-mcp)。按那个 server 自己的配置说明，用你的 token 配置它。
 
-多花这份配置力气换来的：`raw/` 下每个对象保留完整的带时间戳历史，而不是 Lite 那种只保留最新版本的存储方式。
+多花这份配置力气换来的：vault 外 raw 证据库里每个对象保留完整的带时间戳历史，而不是 Lite 那种只保留最新版本的存储方式。
 
 ---
 
@@ -113,7 +113,8 @@ opencli doctor
 │           └───────────────┬───────────────────┘                │
 │                            ▼                                   │
 │                 共享的 vault 结构                                │
-│         raw/（证据）→ wiki/（消化后的笔记）                        │
+│   .data/{Course}/raw/（证据，vault 之外）                        │
+│         → wiki/（消化后的笔记）+ readings/（课程资料）              │
 │                            │                                   │
 │                            ▼                                   │
 │      可选：course-manager（独立 skill）→ wiki/综合/               │
@@ -144,7 +145,7 @@ Agent 会问你 vault 根目录、学期名称，以及要追踪哪些课程（�
 > 同步一下我的 Canvas 课程
 ```
 
-读取每门被追踪课程的作业/公告/页面/模块，和 `raw/` 里已有的内容做 diff，只为真正变化的部分更新 `wiki/` 笔记。
+读取每门被追踪课程的作业/公告/页面/模块，和 vault 外 raw 证据库里已有的内容做 diff，只为真正变化的部分更新 `wiki/` 笔记。
 
 ### 定期同步（可选）
 
@@ -166,7 +167,8 @@ canvas-manager/
 │       ├── references/                # vault 结构、对象模型、
 │       │                              # wiki 创作规则（两个变体共用）
 │       ├── templates/                 # 共用的 wiki 模板
-│       └── scripts/sync.py, manifest.py, snapshot.py
+│       └── scripts/sync.py, manifest.py, snapshot.py,
+│           extract_readings.py
 ├── tests/                             # 29 个单元测试，用标准库 unittest
 ├── .claude-plugin/plugin.json
 └── README.md
@@ -176,7 +178,7 @@ canvas-manager/
 
 ## 可选的 course-manager 集成
 
-本 skill 有意止步于原始证据和按对象的摘要——没有作业总览、没有公告时间线、没有考试/截止日期表、没有 PlanVault 交接文件。如果需要这些，把 [`course-manager`](https://github.com/Geek96/course-manager) 和本 skill 一起装上：它只读 `raw/`、`wiki/course_content/`、`wiki/info/`，在 `wiki/综合/` 里构建那些有截止日期意识的视图，外加一份合并安全的暂存文件供 PlanVault 这类每日规划工具使用。不是必需的——没有它 CanvasManager 本身完全能正常工作，只是没有任何跨对象的综合汇总。
+本 skill 有意止步于原始证据和按对象的摘要——没有作业总览、没有公告时间线、没有考试/截止日期表、没有 PlanVault 交接文件。如果需要这些，把 [`course-manager`](https://github.com/Geek96/course-manager) 和本 skill 一起装上：它只读 vault 外 raw 证据库、`readings/`、`wiki/course_content/`、`wiki/info/`，在 `wiki/综合/` 里构建那些有截止日期意识的视图，外加一份合并安全的暂存文件供 PlanVault 这类每日规划工具使用。不是必需的——没有它 CanvasManager 本身完全能正常工作，只是没有任何跨对象的综合汇总。
 
 ## 可选的 textbook-cracking 集成
 
@@ -184,7 +186,7 @@ canvas-manager/
 
 ## CourseOS
 
-本 skill 在 [CourseOS](https://github.com/Geek96/course-manager) 里承担**证据驱动（Evidence Driver）**角色（见该仓库的 `FRAMEWORK.md`）——这是把 Canvas 转换成 `course-manager` 和 `textbook-cracking` 所依赖的 `raw/`+`wiki/course_content/`+`wiki/info/` 结构的必需组件。任何能产出同样结构的工具（定义见 `course-manager` 的 `references/canvas-manager-integration.md`）都可以顶替这个角色——`canvas-manager` 和 `canvas-manager-lite` 本身就已经是这个角色的两种可互换实现。这里的一切都不依赖于身处 CourseOS 之中；另外两个 skill 是可选的附加组件，不是必需项。
+本 skill 在 [CourseOS](https://github.com/Geek96/course-manager) 里承担**证据驱动（Evidence Driver）**角色（见该仓库的 `FRAMEWORK.md`）——这是把 Canvas 转换成 `course-manager` 和 `textbook-cracking` 所依赖的 vault 外 raw 证据库 + `readings/` + `wiki/course_content/` + `wiki/info/` 结构的必需组件。任何能产出同样结构的工具（定义见 `course-manager` 的 `references/canvas-manager-integration.md`）都可以顶替这个角色——`canvas-manager` 和 `canvas-manager-lite` 本身就已经是这个角色的两种可互换实现。这里的一切都不依赖于身处 CourseOS 之中；另外两个 skill 是可选的附加组件，不是必需项。
 
 ---
 

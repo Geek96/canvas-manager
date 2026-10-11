@@ -1,6 +1,10 @@
 """File (non-page) handling for CanvasManager Lite: new files are added
 automatically; replacing an existing filename requires explicit user
-confirmation before register_file() is called for it."""
+confirmation before register_file() is called for it.
+
+v0.4.0: files land in the vault-outside raw store
+(`{Semester}.data/{Course}/raw/files/{file_id}/`).
+"""
 import shutil
 from pathlib import Path
 
@@ -15,11 +19,11 @@ def classify_file(manifest: dict, file_id: int, filename: str) -> str:
     return "new"
 
 
-def register_file(course_dir: Path, manifest: dict, file_id: int, filename: str, source_path: Path) -> Path:
-    """Copy source_path into raw/files/{file_id}/{filename} and record it in
-    manifest. Never deletes a previous version already registered under a
-    different file_id for the same filename."""
-    dest_dir = course_dir / "raw" / "files" / str(file_id)
+def register_file(data_dir: Path, manifest: dict, file_id: int, filename: str, source_path: Path) -> Path:
+    """Copy source_path into raw/files/{file_id}/{filename} (under data_dir)
+    and record it in manifest. Never deletes a previous version already
+    registered under a different file_id for the same filename."""
+    dest_dir = data_dir / "raw" / "files" / str(file_id)
     dest_dir.mkdir(parents=True, exist_ok=True)
     dest_path = dest_dir / filename
     shutil.copy(source_path, dest_path)

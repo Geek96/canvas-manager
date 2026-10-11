@@ -21,8 +21,13 @@ Required fields: `canvas_type`, `canvas_id`, `course_id`, `title`,
 
 `canvas_type` is always singular (`assignment`, `announcement`, `page`,
 `module`, `discussion`, `syllabus`). The `--object-type` flag passed to
-`sync.py` is the plural form used for the `raw/` subdirectory
-(`assignments`, `announcements`, `pages`, `modules`, `discussions`).
+`sync.py` is the plural form used for the raw store's subdirectory
+(`{Semester}.data/{Course}/raw/assignments`, `.../announcements`,
+`.../pages`, `.../modules`, `.../discussions`).
+
+`latest_snapshot` in a manifest entry is relative to the data dir
+(`{Semester}.data/{Course}/`), e.g.
+`raw/assignments/123/2026-10-07-180000.md`.
 
 ## Turning Canvas MCP output into this shape
 

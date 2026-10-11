@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.4.0
+
+**Breaking** (CourseOS "four work surfaces" reclassification):
+- The raw evidence store moved **outside** the Obsidian vault:
+  `{Course}/raw/` → `{Semester}.data/{Course}/raw/`. Obsidian no longer
+  indexes machine evidence. `sync.py`/`sync_lite.py` now take `--data-dir`
+  instead of `--course-dir`; `latest_snapshot` manifest values are relative
+  to the data dir.
+- New `{Course}/readings/`: human-readable copies (pdf/docx/pptx) of
+  teacher-uploaded files extracted from `raw/files/` on each sync via the
+  new `scripts/extract_readings.py` — the read-in-Obsidian layer. Copies,
+  never symlinks. `wiki/info/文件索引.md` now indexes `readings/` +
+  `textbooks/` instead of `raw/files/`.
+- Teacher-uploaded readable documents are now downloaded during sync
+  (previously on-demand only); large media stays on-demand.
+- New `{Course}/submissions/` convention documented (the student's own work
+  product) — this skill never creates or writes it.
+- Migration for existing semesters: move each `{Course}/raw/` to
+  `{Semester}.data/{Course}/raw/`, run `extract_readings.py`, rewrite
+  `source_snapshot` paths vault-wide.
+
 ## 0.3.1
 
 Documented this skill's role in **CourseOS**: the required Evidence

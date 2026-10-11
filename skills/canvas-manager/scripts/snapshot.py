@@ -1,4 +1,8 @@
-"""Snapshot + sync-log writers for CanvasManager raw storage."""
+"""Snapshot + sync-log writers for CanvasManager raw storage.
+
+v0.4.0: all paths are rooted at the data dir
+(`{Semester}.data/{Course}/`), outside the Obsidian vault.
+"""
 from pathlib import Path
 
 
@@ -30,25 +34,25 @@ def _unique_path(candidate: Path) -> Path:
         n += 1
 
 
-def write_snapshot(course_dir: Path, object_type: str, obj: dict, fetched_at_slug: str, fetched_at: str) -> Path:
-    snapshot_dir = course_dir / "raw" / object_type / str(obj["canvas_id"])
+def write_snapshot(data_dir: Path, object_type: str, obj: dict, fetched_at_slug: str, fetched_at: str) -> Path:
+    snapshot_dir = data_dir / "raw" / object_type / str(obj["canvas_id"])
     snapshot_dir.mkdir(parents=True, exist_ok=True)
     snapshot_path = _unique_path(snapshot_dir / f"{fetched_at_slug}.md")
     snapshot_path.write_text(format_snapshot(obj, fetched_at), encoding="utf-8")
     return snapshot_path
 
 
-def write_snapshot_overwrite(course_dir: Path, object_type: str, obj: dict, fetched_at: str) -> Path:
+def write_snapshot_overwrite(data_dir: Path, object_type: str, obj: dict, fetched_at: str) -> Path:
     """CanvasManager Lite: keep only the latest version of a text/page object, no history."""
-    snapshot_dir = course_dir / "raw" / object_type / str(obj["canvas_id"])
+    snapshot_dir = data_dir / "raw" / object_type / str(obj["canvas_id"])
     snapshot_dir.mkdir(parents=True, exist_ok=True)
     snapshot_path = snapshot_dir / "latest.md"
     snapshot_path.write_text(format_snapshot(obj, fetched_at), encoding="utf-8")
     return snapshot_path
 
 
-def write_sync_log(course_dir: Path, fetched_at_slug: str, object_type: str, new_ids, updated_ids, unchanged_count, missing_ids) -> Path:
-    log_dir = course_dir / "raw" / "sync"
+def write_sync_log(data_dir: Path, fetched_at_slug: str, object_type: str, new_ids, updated_ids, unchanged_count, missing_ids) -> Path:
+    log_dir = data_dir / "raw" / "sync"
     log_dir.mkdir(parents=True, exist_ok=True)
     log_path = _unique_path(log_dir / f"{fetched_at_slug}-{object_type}.md")
     lines = [f"# Sync {fetched_at_slug} ({object_type})", ""]

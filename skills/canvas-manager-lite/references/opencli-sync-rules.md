@@ -76,15 +76,29 @@ Call `sync_lite.py` with `--object-type` set to `assignments`,
 
 ```bash
 python3 skills/canvas-manager-lite/scripts/sync_lite.py \
-  --course-dir "{Root}/{Semester}/{Course}" \
+  --data-dir "{Root}/{Semester}.data/{Course}" \
   --object-type pages \
   --input /tmp/canvas-pages.json
 ```
 
 Unlike the full skill's `raw/{type}/{id}/{timestamp}.md` history, Lite
-writes only `raw/{type}/{id}/latest.md` and overwrites it in place when
-content changes. A content-hash check still skips the write entirely when
-nothing changed, so re-running sync with no Canvas-side changes is a no-op.
+writes only `raw/{type}/{id}/latest.md` (under
+`{Root}/{Semester}.data/{Course}/`, outside the vault) and overwrites it
+in place when content changes. A content-hash check still skips the write
+entirely when nothing changed, so re-running sync with no Canvas-side
+changes is a no-op.
+
+After syncing, extract readable documents into `{Course}/readings/` with
+the shared script (same as the full skill):
+
+```bash
+python3 skills/canvas-manager/scripts/extract_readings.py \
+  --data-dir "{Root}/{Semester}.data/{Course}" \
+  --course-dir "{Root}/{Semester}/{Course}"
+```
+
+then regenerate `wiki/info/文件索引.md` from the actual `readings/` +
+`textbooks/` listing.
 
 ## Grades: submission status and scores
 
@@ -114,7 +128,8 @@ OS Downloads folder, not just rendered as a page). Move it into place via
   "`syllabus.pdf` may have a new version on Canvas — replace the one we
   have?"). Only re-run with `--confirm-replace {file_id}` after the user
   explicitly says yes. The previous version is never deleted, even after a
-  confirmed replacement — both live under their own `raw/files/{file_id}/`.
+  confirmed replacement — both live under their own
+  `{Semester}.data/{Course}/raw/files/{file_id}/`.
 
 ## Scheduling
 

@@ -2,32 +2,54 @@
 
 ```text
 {user-chosen root}/
-└── {Semester}/                          # e.g. 2026Spring
-    ├── 学期总览.md
-    └── {Course}/                        # default "CourseCode - Course Name"
-        ├── raw/
-        │   ├── _manifest/canvas-objects.json
-        │   ├── sync/
-        │   ├── assignments/{id}/{timestamp}.md
-        │   ├── announcements/{id}/{timestamp}.md
-        │   ├── pages/{id}/{timestamp}.md
-        │   ├── modules/{id}/{timestamp}.md
-        │   └── files/{id}/...
-        ├── wiki/
-        │   ├── course_content/
-        │   ├── info/
-        │   ├── textbook_breakdown/     # only if the course has a real textbook
-        │   ├── 综合/                   # only if the course-manager skill is also installed and run
-        │   └── assets/
-        ├── textbooks/                  # user-sourced textbook/reader files, not Canvas evidence
-        ├── templates/
-        └── 课程总览.md
+├── {Semester}/                          # e.g. 2026Spring — the Obsidian vault
+│   ├── 学期总览.md
+│   ├── courseos.json                    # config surface (CourseOS)
+│   ├── _exports/planvault-time-sensitive.md
+│   └── {Course}/                        # default "CourseCode - Course Name"
+│       ├── wiki/
+│       │   ├── course_content/
+│       │   ├── info/                    # incl. 文件索引.md → readings/ + textbooks/
+│       │   ├── textbook_breakdown/      # only if the course has a real textbook
+│       │   ├── 综合/                   # only if the course-manager skill is also installed and run
+│       │   └── assets/
+│       ├── textbooks/                   # user-sourced textbook/reader files, not Canvas evidence
+│       ├── readings/                    # human-readable copies of teacher uploads (this skill)
+│       ├── submissions/                 # the student's own work; this skill never writes here
+│       ├── templates/
+│       └── 课程总览.md
+├── {Semester}.data/                     # vault-OUTSIDE: machine surface
+│   └── {Course}/
+│       └── raw/                         # append-only evidence (moved out in v0.4.0)
+│           ├── _manifest/canvas-objects.json
+│           ├── sync/
+│           ├── assignments/{id}/{timestamp}.md
+│           ├── announcements/{id}/{timestamp}.md
+│           ├── pages/{id}/{timestamp}.md
+│           ├── modules/{id}/{timestamp}.md
+│           └── files/{id}/...
+└── {Semester}.code/                     # vault-OUTSIDE: code surface (VSCode)
+    └── {Course}/                        # one git repo per course
 ```
 
 Rules:
 
-- `raw/` is append-only evidence. Nothing already written to `raw/` is ever
-  edited or deleted, including by this skill.
+- `raw/` is append-only evidence and lives **outside** the Obsidian vault
+  (`{Semester}.data/{Course}/raw/`). Nothing already written there is ever
+  edited or deleted, including by this skill. Obsidian never indexes it —
+  no "excluded files" hacks needed. (Moved out in v0.4.0; was
+  `{Course}/raw/`.)
+- `readings/` holds human-readable **copies** (never symlinks —
+  Syncthing/mobile safe) of teacher-uploaded readable files
+  (pdf/docx/pptx) extracted from `raw/files/` on each sync. Named from
+  the file's own title, prefixed with the module name when known,
+  deduplicated (`-2`, `-3`, …). This is the read-in-Obsidian layer —
+  Obsidian renders PDFs natively. Regenerated from the actual directory
+  listing each sync, never hand-edited.
+- `submissions/` is the student's own work product (`{assignment-slug}/`
+  per assignment: drafts + the submitted artifact). This skill never
+  creates it and never writes into it — course-manager reads it read-only
+  for submitted/not-submitted status.
 - `wiki/` is the learning surface. It can be updated, merged, rewritten, or
   deleted — but only the regions this skill generated (see
   `obsidian-rules.md` for the ownership boundary with user-written content,
