@@ -57,6 +57,43 @@ Video/image module items: keep the item's URL only, don't transcribe or
 describe the media itself (see
 `../../canvas-manager/references/obsidian-rules.md`).
 
+## Fast path: Canvas REST through the logged-in tab (recommended)
+
+Scraping page by page is slow and misses fields. Inside a logged-in
+Canvas tab, `fetch('/api/v1/...')` uses the student's own session, so the
+whole course can be read in one `eval` without any token. The scripts live
+in `scripts/api/` — **use them from the skill, never re-create them in a
+scratch folder** (scratch folders get cleaned and the next sync then has to
+rebuild everything):
+
+```bash
+export CANVAS_BASE=https://{institution}.instructure.com
+W=/tmp/cm-work   # any scratch dir for dumps and prepared objects
+
+# 1. fetch + build + dry run (nothing written yet)
+scripts/api/prepare_course.sh cm-cs-1331 {course_id} "{Root}/{Semester}.data/{Course}" "$W"
+# 2. review the "new / changed / missing" list, then write it
+scripts/api/apply_course.sh "{Root}/{Semester}.data/{Course}" "$W/out/{course_id}"
+opencli browser cm-cs-1331 close
+```
+
+- `fetch_course.js` reads course + syllabus, assignments (with the
+  student's submission), assignment groups, announcements, discussions,
+  modules with items, quizzes, and every page (listed, linked from a
+  module, the front page, and pages the front page/syllabus link to).
+- `build_course.py` turns that into one input file per object type plus a
+  `grades` object built from the submissions (same table as
+  `grades-sync.md`). When Canvas' `updated_at` hasn't moved since the last
+  snapshot it reuses the stored body, so formatting noise never shows up
+  as a change. Its report lists `new_files`: module files not yet in the
+  manifest — **ask before downloading them** (see "Files" below).
+- `dry_run.py` prints, per type, how many objects are new / changed /
+  missing against the manifest, so the student can see what will change
+  before `apply_course.sh` writes it.
+
+Fall back to the page-by-page method above only when the API is blocked
+(the dump comes back with an `error` for a type, or the course hides a tab).
+
 ## Normalizing into the shared object schema
 
 Map extracted content into the same shape used by the full skill (see

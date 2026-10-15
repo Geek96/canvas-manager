@@ -41,7 +41,9 @@ touch those. Platforms not listed: leave alone.
 
 ### Gradescope (`gradescope`)
 Open `https://www.gradescope.com/courses/{id}`; the table lists every
-assignment. One object per course; `content`:
+assignment. Scripts: `scripts/platforms/gradescope_table.js` (eval in the
+tab) → `scripts/platforms/gradescope_build.py`. One object per course;
+`content`:
 
 ```
 | 作业 | 发布 | 截止 | 迟交截止 | 状态 | 得分 |
@@ -53,6 +55,17 @@ assignment. One object per course; `content`:
 write the score). Use the page's own dates (convert to the student's local
 time, `YYYY-MM-DD HH:mm`).
 
+**Problem PDFs (handouts).** Some instructors post the problem set only on
+Gradescope: an unsubmitted assignment's page
+(`/courses/{id}/assignments/{aid}/submissions/new`) then shows
+"Download {name} PDF" (a signed S3 link valid for a few hours). Canvas has
+no copy, so course-manager has nothing to read for that homework's scope.
+For each open assignment, check whether that link exists and **ask the
+student before downloading** (filename, source, approximate size). On a
+yes, save it to `raw/gradescope/{assignment name}.pdf` (e.g. `H7.pdf`; signed
+link: `curl -s -o …` is fine, no credentials involved) and mention it in
+the course's `wiki/info/` note for that assignment.
+
 ### Perusall (`perusall`)
 Open the course on `app.perusall.com`; the assignments list shows each
 reading with its deadline and completion. One object per course;
@@ -60,7 +73,10 @@ reading with its deadline and completion. One object per course;
 进行中 as shown.
 
 ### Ed Discussion (`ed`)
-Open the course on `edstem.org`. Collect **only** posts by staff
+Open the course on `edstem.org` (wait until the page has loaded — the Ed
+token is read from that tab's localStorage; an empty result usually means
+the tab wasn't ready, retry once). Scripts: `scripts/platforms/ed_threads.js`
+→ `scripts/platforms/ed_build.py`. Collect **only** posts by staff
 (instructor / TA badge) that are announcements or pinned — skip student
 questions. One object per post (`canvas_id` = post number); `content`:
 title, author role, date, full text. Cap at the 30 most recent.
