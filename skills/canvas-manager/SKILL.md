@@ -38,6 +38,11 @@ course list, not a cold open-ended question.
 Ask the user:
 
 1. Where should the vault root live? (a folder path)
+   If that folder isn't empty, check it before creating anything: when it
+   holds the student's own structure, offer the three choices in
+   `references/existing-folder.md` (adapt / different folder / add
+   alongside) and promise that none of their existing files will be
+   deleted, moved, renamed or edited.
 2. What's the current semester name? (e.g. `2026Spring`; suggest a default
    inferred from today's date and let them just confirm it)
 3. Call your Canvas MCP's course-listing tool and present the student's

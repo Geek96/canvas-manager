@@ -67,6 +67,11 @@ Then ask:
    the URL they use to reach Canvas and extract it from that instead of
    making them figure out the subdomain themselves.
 2. Where should the vault root live? (a folder path)
+   If that folder isn't empty, check it before creating anything: when it
+   holds the student's own structure, offer the three choices in
+   `../canvas-manager/references/existing-folder.md` (adapt / different folder / add
+   alongside) and promise that none of their existing files will be
+   deleted, moved, renamed or edited.
 3. What's the current semester name? (e.g. `2026Fall`; suggest a default
    inferred from today's date and let them just confirm it)
 4. Open `https://{institution}.instructure.com/courses` with `opencli

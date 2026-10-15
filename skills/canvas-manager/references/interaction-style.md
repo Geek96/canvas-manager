@@ -33,6 +33,14 @@ surfaces courses the student didn't think to mention, and unpublished
 courses that should be excluded or handled as a placeholder (see
 `vault-structure.md`).
 
+**2b. The chosen folder already has the student's own structure** — right
+after the vault root is named, before creating anything. Summarize what's
+there, state that existing files will never be deleted, moved, renamed or
+edited whatever they pick, then ask: *"[1] Adapt to your structure (reuse
+your folders, add only what's missing) [2] Use a different folder (start
+fresh elsewhere) [3] Add the standard layout here, next to your folders"*.
+Details and what each option does: `existing-folder.md`.
+
 **3. Sync pacing on a large first-time sync** — when it's not obvious
 ahead of time how much content a course (or a batch of newly-added
 courses) will turn out to have, ask: *"Process all N courses in one pass
